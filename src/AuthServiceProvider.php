@@ -11,12 +11,12 @@ use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvid
 class AuthServiceProvider extends ServiceProvider
 {
     protected $policies = [
-        H5PContent::class => H5PContentPolicy::class,
-        H5PLibrary::class => H5PLibraryPolicy::class,
+//        H5PContent::class => H5PContentPolicy::class,
+//        H5PLibrary::class => H5PLibraryPolicy::class,
     ];
 
     public function boot()
     {
-        $this->registerPolicies();
+//        $this->registerPolicies();
     }
 }

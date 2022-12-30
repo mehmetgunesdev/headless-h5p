@@ -33,7 +33,7 @@ class HeadlessH5PServiceProvider extends ServiceProvider
     {
         $this->commands([H5PSeedCommand::class, StorageH5PLinkCommand::class]);
         $this->bindH5P();
-        $this->app->register(AuthServiceProvider::class);
+//        $this->app->register(AuthServiceProvider::class);
     }
 
     private function bindH5P(): void
