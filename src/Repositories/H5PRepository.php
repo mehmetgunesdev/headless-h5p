@@ -1,15 +1,15 @@
 <?php
 
-namespace Brnysn\LaravelH5P\Repositories;
+namespace Alsay\LaravelH5P\Repositories;
 
-use Brnysn\LaravelH5P\Exceptions\H5PException;
-use Brnysn\LaravelH5P\Helpers\Helpers;
-use Brnysn\LaravelH5P\Models\H5PContent;
-use Brnysn\LaravelH5P\Models\H5PContentLibrary;
-use Brnysn\LaravelH5P\Models\H5PLibrary;
-use Brnysn\LaravelH5P\Models\H5PLibraryDependency;
-use Brnysn\LaravelH5P\Models\H5PLibraryLanguage;
-use Brnysn\LaravelH5P\Models\H5pLibrariesHubCache;
+use Alsay\LaravelH5P\Exceptions\H5PException;
+use Alsay\LaravelH5P\Helpers\Helpers;
+use Alsay\LaravelH5P\Models\H5PContent;
+use Alsay\LaravelH5P\Models\H5PContentLibrary;
+use Alsay\LaravelH5P\Models\H5PLibrary;
+use Alsay\LaravelH5P\Models\H5PLibraryDependency;
+use Alsay\LaravelH5P\Models\H5PLibraryLanguage;
+use Alsay\LaravelH5P\Models\H5pLibrariesHubCache;
 use H5PPermission;
 use H5PFrameworkInterface;
 use GuzzleHttp\Client;

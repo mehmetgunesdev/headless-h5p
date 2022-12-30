@@ -1,8 +1,8 @@
 <?php
 
-namespace Brnysn\LaravelH5P\Http\Requests;
+namespace Alsay\LaravelH5P\Http\Requests;
 
-use Brnysn\LaravelH5P\Models\H5PContent;
+use Alsay\LaravelH5P\Models\H5PContent;
 use Illuminate\Support\Facades\Gate;
 
 class AdminContentReadRequest extends ContentReadRequest

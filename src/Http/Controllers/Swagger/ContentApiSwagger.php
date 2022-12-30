@@ -1,16 +1,16 @@
 <?php
 
-namespace Brnysn\LaravelH5P\Http\Controllers\Swagger;
+namespace Alsay\LaravelH5P\Http\Controllers\Swagger;
 
-use Brnysn\LaravelH5P\Http\Requests\ContentCreateRequest;
-use Brnysn\LaravelH5P\Http\Requests\ContentDeleteRequest;
-use Brnysn\LaravelH5P\Http\Requests\ContentListRequest;
-use Brnysn\LaravelH5P\Http\Requests\AdminContentReadRequest;
-use Brnysn\LaravelH5P\Http\Requests\ContentReadRequest;
+use Alsay\LaravelH5P\Http\Requests\ContentCreateRequest;
+use Alsay\LaravelH5P\Http\Requests\ContentDeleteRequest;
+use Alsay\LaravelH5P\Http\Requests\ContentListRequest;
+use Alsay\LaravelH5P\Http\Requests\AdminContentReadRequest;
+use Alsay\LaravelH5P\Http\Requests\ContentReadRequest;
 use Illuminate\Http\JsonResponse;
 
-use Brnysn\LaravelH5P\Http\Requests\ContentUpdateRequest;
-use Brnysn\LaravelH5P\Http\Requests\LibraryStoreRequest;
+use Alsay\LaravelH5P\Http\Requests\ContentUpdateRequest;
+use Alsay\LaravelH5P\Http\Requests\LibraryStoreRequest;
 
     /**
      * @OA\Schema(

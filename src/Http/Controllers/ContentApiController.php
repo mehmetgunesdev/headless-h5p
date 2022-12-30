@@ -1,20 +1,20 @@
 <?php
 
-namespace Brnysn\LaravelH5P\Http\Controllers;
+namespace Alsay\LaravelH5P\Http\Controllers;
 
-use Brnysn\LaravelH5P\Dtos\ContentFilterCriteriaDto;
-use Brnysn\LaravelH5P\Http\Controllers\Swagger\ContentApiSwagger;
-use Brnysn\LaravelH5P\Http\Requests\ContentCreateRequest;
-use Brnysn\LaravelH5P\Http\Requests\ContentDeleteRequest;
-use Brnysn\LaravelH5P\Http\Requests\ContentListRequest;
-use Brnysn\LaravelH5P\Http\Requests\AdminContentReadRequest;
-use Brnysn\LaravelH5P\Http\Requests\ContentReadRequest;
-use Brnysn\LaravelH5P\Http\Requests\ContentUpdateRequest;
-use Brnysn\LaravelH5P\Http\Requests\LibraryStoreRequest;
-use Brnysn\LaravelH5P\Http\Resources\ContentIndexResource;
-use Brnysn\LaravelH5P\Http\Resources\ContentResource;
-use Brnysn\LaravelH5P\Repositories\Contracts\H5PContentRepositoryContract;
-use Brnysn\LaravelH5P\Services\Contracts\HeadlessH5PServiceContract;
+use Alsay\LaravelH5P\Dtos\ContentFilterCriteriaDto;
+use Alsay\LaravelH5P\Http\Controllers\Swagger\ContentApiSwagger;
+use Alsay\LaravelH5P\Http\Requests\ContentCreateRequest;
+use Alsay\LaravelH5P\Http\Requests\ContentDeleteRequest;
+use Alsay\LaravelH5P\Http\Requests\ContentListRequest;
+use Alsay\LaravelH5P\Http\Requests\AdminContentReadRequest;
+use Alsay\LaravelH5P\Http\Requests\ContentReadRequest;
+use Alsay\LaravelH5P\Http\Requests\ContentUpdateRequest;
+use Alsay\LaravelH5P\Http\Requests\LibraryStoreRequest;
+use Alsay\LaravelH5P\Http\Resources\ContentIndexResource;
+use Alsay\LaravelH5P\Http\Resources\ContentResource;
+use Alsay\LaravelH5P\Repositories\Contracts\H5PContentRepositoryContract;
+use Alsay\LaravelH5P\Services\Contracts\HeadlessH5PServiceContract;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;

@@ -1,5 +1,5 @@
 {
-    "name": "brnysn/laravel-h5p",
+    "name": "alsay/headless-h5p",
     "description": "H5P integration for Laravel without any additional dependencies.",
     "type": "package",
     "require": {
@@ -17,27 +17,23 @@
     },
     "autoload": {
         "psr-4": {
-            "Brnysn\\LaravelH5P\\": "src",
-            "Brnysn\\LaravelH5P\\Database\\Factories\\": "database/factories",
-            "Brnysn\\LaravelH5P\\Database\\Seeders\\": "database/seeders"
+            "Alsay\\LaravelH5P\\": "src",
+            "Alsay\\LaravelH5P\\Database\\Factories\\": "database/factories",
+            "Alsay\\LaravelH5P\\Database\\Seeders\\": "database/seeders"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Brnysn\\LaravelH5P\\Tests\\": "tests"
+            "Alsay\\LaravelH5P\\Tests\\": "tests"
         }
     },
     "license": "MIT",
     "authors": [
-        {
-            "name": "Yasin Baran",
-            "email": "brnysn@gmail.com"
-        }
     ],
     "extra": {
         "laravel": {
             "providers": [
-                "Brnysn\\LaravelH5P\\HeadlessH5PServiceProvider"
+                "Alsay\\LaravelH5P\\HeadlessH5PServiceProvider"
             ]
         }
     },

@@ -1,13 +1,13 @@
 <?php
 
-namespace Brnysn\LaravelH5P\Repositories;
+namespace Alsay\LaravelH5P\Repositories;
 
-use Brnysn\LaravelH5P\Models\H5PContent;
+use Alsay\LaravelH5P\Models\H5PContent;
 use Exception;
 use H5PEditorAjaxInterface;
-use Brnysn\LaravelH5P\Models\H5pLibrariesHubCache;
-use Brnysn\LaravelH5P\Helpers\Helpers;
-use Brnysn\LaravelH5P\Models\H5PLibrary;
+use Alsay\LaravelH5P\Models\H5pLibrariesHubCache;
+use Alsay\LaravelH5P\Helpers\Helpers;
+use Alsay\LaravelH5P\Models\H5PLibrary;
 use Illuminate\Support\Facades\Log;
 use Lcobucci\JWT\Parser;
 use Lcobucci\JWT\Signer\Key;

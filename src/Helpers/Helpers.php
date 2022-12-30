@@ -1,6 +1,6 @@
 <?php
 
-namespace Brnysn\LaravelH5P\Helpers;
+namespace Alsay\LaravelH5P\Helpers;
 
 class Helpers
 {
