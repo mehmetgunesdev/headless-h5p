@@ -31,23 +31,25 @@ Route::group(['middleware' => ['auth', H5PLangMiddleware::class], 'prefix' => 'h
     Route::group(['prefix' => 'hh5p'], function () {
         Route::get('content/{uuid}', [ContentApiController::class, 'frontShow'])->name('hh5p.content.show')->withoutMiddleware('auth:api');
 
+
+        Route::get('libraries', [LibraryApiController::class, 'libraries'])->name('hh5p.library.get.libraries');
+        Route::post('libraries', [LibraryApiController::class, 'libraries'])->name('hh5p.library.post.libraries');
+        Route::post('files/{nonce}', FilesApiController::class)->name('hh5p.files.upload.nonce');
+
+        Route::get('content-type-cache', [LibraryApiController::class, 'contentTypeCache'])->name('hh5p.library.content-type-cache');
+        Route::get('content-hub-metadata-cache', [LibraryApiController::class, 'contentHubMetadata'])->name('hh5p.library.content-hub-metadata-cache');
+
+        Route::post('library-install', [LibraryApiController::class, 'libraryInstall'])->name('hh5p.ajax.library-install');
+        Route::post('library-upload', [LibraryApiController::class, 'libraryUpload'])->name('hh5p.ajax.library-upload');
+
+        Route::post('filter', [LibraryApiController::class, 'filter'])->name('hh5p.ajax.filter');
+        Route::post('translations', [LibraryApiController::class, 'translations'])->name('hh5p.ajax.translations');
+
+
         Route::get('/', function () {
             return 'Hello World';
         })->name('hh5p.index'); // DO not remove this is needed as prefix for editor ajax calls
     });
 });
 
-Route::group(['middleware' => [QueryToken::class, H5PLangMiddleware::class], 'prefix' => 'api/hh5p'], function () {
-    Route::get('libraries', [LibraryApiController::class, 'libraries'])->name('hh5p.library.get.libraries');
-    Route::post('libraries', [LibraryApiController::class, 'libraries'])->name('hh5p.library.post.libraries');
-    Route::post('files/{nonce}', FilesApiController::class)->name('hh5p.files.upload.nonce');
 
-    Route::get('content-type-cache', [LibraryApiController::class, 'contentTypeCache'])->name('hh5p.library.content-type-cache');
-    Route::get('content-hub-metadata-cache', [LibraryApiController::class, 'contentHubMetadata'])->name('hh5p.library.content-hub-metadata-cache');
-
-    Route::post('library-install', [LibraryApiController::class, 'libraryInstall'])->name('hh5p.ajax.library-install');
-    Route::post('library-upload', [LibraryApiController::class, 'libraryUpload'])->name('hh5p.ajax.library-upload');
-
-    Route::post('filter', [LibraryApiController::class, 'filter'])->name('hh5p.ajax.filter');
-    Route::post('translations', [LibraryApiController::class, 'translations'])->name('hh5p.ajax.translations');
-});
