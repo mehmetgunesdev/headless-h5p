@@ -8,7 +8,7 @@ use Alsay\LaravelH5P\Http\Middleware\H5PLangMiddleware;
 use Alsay\LaravelH5P\Http\Middleware\QueryToken;
 use Illuminate\Support\Facades\Route;
 
-Route::group(['middleware' => ['auth:api', 'api', H5PLangMiddleware::class], 'prefix' => 'api'], function () {
+Route::group(['middleware' => ['auth', H5PLangMiddleware::class], 'prefix' => 'hapi'], function () {
     Route::group(['prefix' => 'admin/hh5p'], function () {
         Route::post('library', [LibraryApiController::class, 'store'])->name('hh5p.library.store');
         Route::get('library', [LibraryApiController::class, 'index'])->name('hh5p.library.list');
