@@ -132,6 +132,8 @@ class H5PContentRepository implements H5PContentRepositoryContract
         array $columns = ['hh5p_contents.*']
     ): LengthAwarePaginator {
         $query = $this->getQueryContent($contentFilterDto, $columns);
+        $query->orderBy('hh5p_contents.updated_at', 'desc');
+
         $paginator = $query->paginate(intval($per_page));
 
         $paginator->getCollection()->transform(function ($content) {
