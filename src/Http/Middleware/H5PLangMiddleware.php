@@ -11,7 +11,7 @@ class H5PLangMiddleware
 {
     public function handle(Request $request, Closure $next)
     {
-        $lang = $request->get('lang') ?? Config::get('hh5p.language');
+        $lang = Config::get('hh5p.language');
 
         Config::set('hh5p.language', $lang);
         App::setLocale($lang);
