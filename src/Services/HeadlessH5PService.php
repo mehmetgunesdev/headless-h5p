@@ -192,8 +192,9 @@ class HeadlessH5PService implements HeadlessH5PServiceContract
             'url' => $config['url'],
             'postUserStatistics' => config('hh5p.h5p_track_user'),
             'ajax' => [
-                'setFinished' => $config['ajaxSetFinished'],
-                'contentUserData' => $config['ajaxContentUserData'],
+                'setFinished' => route('h5p.ajax.finish'),
+                'contentUserData' => route('h5p.ajax.content-user-data'),
+                // 'contentUserData' => route('h5p.ajax.content-user-data', ['content_id' => ':contentId', 'data_type' => ':dataType', 'sub_content_id' => ':subContentId']),
             ],
             'saveFreq' => false,
             'siteUrl' => $config['domain'],
