@@ -15,6 +15,7 @@ use Alsay\LaravelH5P\Traits\QueryExtendable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Storage;
 
 
 class H5PContentRepository implements H5PContentRepositoryContract
