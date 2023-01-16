@@ -367,6 +367,9 @@ class HeadlessH5PService implements HeadlessH5PServiceContract
         // READ this https://h5p.org/creating-your-own-h5p-plugin
         $user = Auth::user();
 
+        $token = str_replace('Bearer ', '', request()->header('authorization'));
+
+
         $config = $this->getConfig();
 
         $settings = [
@@ -374,8 +377,8 @@ class HeadlessH5PService implements HeadlessH5PServiceContract
             'url' => $config['url'],
             'postUserStatistics' => config('hh5p.h5p_track_user'),
             'ajax' => [
-                'setFinished' => route('h5p.ajax.finish').'?user_id='.$user->id,
-                'contentUserData' => route('h5p.ajax.content-user-data').'?user_id='.$user->id,
+                'setFinished' => route('h5p.ajax.finish').'?token='.$token,
+                'contentUserData' => route('h5p.ajax.content-user-data').'?token='.$token,
                 // 'contentUserData' => route('h5p.ajax.content-user-data', ['content_id' => ':contentId', 'data_type' => ':dataType', 'sub_content_id' => ':subContentId']),
             ],
             'saveFreq' => false,
