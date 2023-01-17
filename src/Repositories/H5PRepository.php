@@ -1370,7 +1370,6 @@ class H5PRepository implements H5PFrameworkInterface
         if (config('filesystems.default') === 'cdn') {
             $content = str_replace("images\/", config('filesystems.ftp_public_url') . 'content/' . $contentId . '/images/', $content);
             $content = str_replace("audios\/", config('filesystems.ftp_public_url') . 'content/' . $contentId . '/audios/', $content);
-
         }
 
         return $content;
