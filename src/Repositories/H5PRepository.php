@@ -988,6 +988,13 @@ class H5PRepository implements H5PFrameworkInterface
         $content['metadata'] = json_encode($content['metadata']); // : json content as string
         $content['slug'] = $content['slug'] ?? 'slug';
 
+
+        $content['parameters'] = $this->changeFileUrl($content['parameters'], $content['contentId']);
+        $content['filtered'] = $this->changeFileUrl($content['filtered'], $content['contentId']);
+        $content['params'] = $this->changeFileUrl($content['params'], $content['contentId']);
+        $content['metadata'] = $this->changeFileUrl($content['metadata'], $content['contentId']);
+
+
         return $content;
     }
 
@@ -1356,5 +1363,12 @@ class H5PRepository implements H5PFrameworkInterface
      */
     public function setContentHubMetadataChecked($time, $lang = 'en')
     {
+    }
+
+    public function changeFileUrl(string $content, int $contentId): string
+    {
+        $content = str_replace("images\/", config('filesystems.ftp_public_url') . 'content/' . $contentId . '/images/', $content);
+        $content = str_replace("audios\/", config('filesystems.ftp_public_url') . 'content/' . $contentId . '/audios/', $content);
+        return $content;
     }
 }
