@@ -12,9 +12,11 @@ use Alsay\LaravelH5P\Models\H5PTempFile;
 use Alsay\LaravelH5P\Repositories\Contracts\H5PContentRepositoryContract;
 use Alsay\LaravelH5P\Services\Contracts\HeadlessH5PServiceContract;
 use Alsay\LaravelH5P\Traits\QueryExtendable;
+use App\Models\Content;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 
 
@@ -59,6 +61,8 @@ class H5PContentRepository implements H5PContentRepositoryContract
         ]);
 
         $this->moveTmpFilesToContentFolders($nonce, $content);
+
+        $this->contentMapping($content);
 
         return $content;
     }
@@ -274,5 +278,21 @@ class H5PContentRepository implements H5PContentRepositoryContract
         return H5PContent::query()
             ->whereRaw('(SELECT COUNT(*) FROM topic_h5ps WHERE hh5p_contents.id = topic_h5ps.value) <= 0')
             ->get();
+    }
+
+    /**
+     * @param int $content
+     * @return void
+     */
+    private function contentMapping(int $content): void
+    {
+        $appContentId = Session::get('contentId');
+        if ($appContentId) {
+            $content_obj = H5PContent::find($content);
+            $apiContent = Content::find($appContentId);
+            $apiContent->update([
+                'value' => $content_obj['uuid'],
+            ]);
+        }
     }
 }

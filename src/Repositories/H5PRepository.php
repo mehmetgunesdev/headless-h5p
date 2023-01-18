@@ -1365,7 +1365,7 @@ class H5PRepository implements H5PFrameworkInterface
     {
     }
 
-    public function changeFileUrl(string $content, int $contentId): string
+    public function changeFileUrl(?string $content, int $contentId): ?string
     {
         if (config('filesystems.default') === 'cdn') {
             $content = str_replace("images\/", config('filesystems.ftp_public_url') . 'content/' . $contentId . '/images/', $content);
