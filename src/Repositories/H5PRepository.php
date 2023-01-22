@@ -990,9 +990,11 @@ class H5PRepository implements H5PFrameworkInterface
 
 
         $content['parameters'] = $this->changeFileUrl($content['parameters'], $content['contentId']);
-        $content['filtered'] = $this->changeFileUrl($content['filtered'], $content['contentId']);
         $content['params'] = $this->changeFileUrl($content['params'], $content['contentId']);
-        $content['metadata'] = $this->changeFileUrl($content['metadata'], $content['contentId']);
+
+
+        $content['filtered'] = $this->changeFileFullUrl($content['filtered'], $content['contentId']);
+        $content['metadata'] = $this->changeFileFullUrl($content['metadata'], $content['contentId']);
 
 
         return $content;
@@ -1370,6 +1372,16 @@ class H5PRepository implements H5PFrameworkInterface
         if (config('filesystems.default') === 'cdn') {
             $content = str_replace("images\/", config('filesystems.ftp_public_path') . 'content/' . $contentId . '/images/', $content);
             $content = str_replace("audios\/", config('filesystems.ftp_public_path') . 'content/' . $contentId . '/audios/', $content);
+        }
+
+        return $content;
+    }
+
+    public function changeFileFullUrl(?string $content, int $contentId): ?string
+    {
+        if (config('filesystems.default') === 'cdn') {
+            $content = str_replace("content\/'.$contentId.'\/images\/", config('filesystems.ftp_public_path') . 'content/' . $contentId . '/images/', $content);
+            $content = str_replace("content\/'.$contentId.'\/audios\/", config('filesystems.ftp_public_path') . 'content/' . $contentId . '/audios/', $content);
         }
 
         return $content;
