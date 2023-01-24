@@ -292,6 +292,7 @@ class H5PContentRepository implements H5PContentRepositoryContract
             $apiContent = Content::find($appContentId);
             $apiContent->update([
                 'value' => $content_obj['uuid'],
+                'library_id' => $content_obj['library_id']
             ]);
         }
     }
