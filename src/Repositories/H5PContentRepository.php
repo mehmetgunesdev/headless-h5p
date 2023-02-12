@@ -13,6 +13,8 @@ use Alsay\LaravelH5P\Repositories\Contracts\H5PContentRepositoryContract;
 use Alsay\LaravelH5P\Services\Contracts\HeadlessH5PServiceContract;
 use Alsay\LaravelH5P\Traits\QueryExtendable;
 use App\Models\Content;
+use App\Models\News;
+use App\Models\PracticeOnlineCourse;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
@@ -124,7 +126,7 @@ class H5PContentRepository implements H5PContentRepositoryContract
                 }
                 rename($old_path, $new_path);
                 if (config('filesystems.default') === 'cdn') {
-                    Storage::disk("cdn")->put(str_replace('/editor', '/content/' . $contentId, $file->path),file_get_contents($new_path));
+                    Storage::disk("cdn")->put(str_replace('/editor', '/content/' . $contentId, $file->path), file_get_contents($new_path));
                 }
             }
 
@@ -136,9 +138,10 @@ class H5PContentRepository implements H5PContentRepositoryContract
 
     public function list(
         ContentFilterCriteriaDto $contentFilterDto,
-        $per_page = 15,
-        array $columns = ['hh5p_contents.*']
-    ): LengthAwarePaginator {
+                                 $per_page = 15,
+        array                    $columns = ['hh5p_contents.*']
+    ): LengthAwarePaginator
+    {
         $query = $this->getQueryContent($contentFilterDto, $columns);
         $query->orderBy('hh5p_contents.updated_at', 'desc');
 
@@ -159,8 +162,9 @@ class H5PContentRepository implements H5PContentRepositoryContract
 
     public function unpaginatedList(
         ContentFilterCriteriaDto $contentFilterDto,
-        array $columns = ['hh5p_contents.*']
-    ): Collection {
+        array                    $columns = ['hh5p_contents.*']
+    ): Collection
+    {
         $query = $this->getQueryContent($contentFilterDto, $columns);
         $list = $query->get();
 
@@ -287,9 +291,30 @@ class H5PContentRepository implements H5PContentRepositoryContract
     private function contentMapping(int $content): void
     {
         $appContentId = Session::get('contentId');
+        $newsContentId = Session::get('newsContentId');
+        $onlineCourseId = Session::get('onlineCourseId');
+
         if ($appContentId) {
             $content_obj = H5PContent::find($content);
             $apiContent = Content::find($appContentId);
+            $apiContent->update([
+                'value' => $content_obj['uuid'],
+                'library_id' => $content_obj['library_id']
+            ]);
+        }
+
+        if ($newsContentId) {
+            $content_obj = H5PContent::find($content);
+            $apiContent = News::find($newsContentId);
+            $apiContent->update([
+                'value' => $content_obj['uuid'],
+                'library_id' => $content_obj['library_id']
+            ]);
+        }
+
+        if ($onlineCourseId) {
+            $content_obj = H5PContent::find($content);
+            $apiContent = PracticeOnlineCourse::find($onlineCourseId);
             $apiContent->update([
                 'value' => $content_obj['uuid'],
                 'library_id' => $content_obj['library_id']
