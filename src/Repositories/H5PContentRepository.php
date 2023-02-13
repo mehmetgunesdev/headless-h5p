@@ -291,9 +291,6 @@ class H5PContentRepository implements H5PContentRepositoryContract
     private function contentMapping(int $content): void
     {
         $appContentId = Session::get('contentId');
-        $newsContentId = Session::get('newsContentId');
-        $onlineCourseId = Session::get('onlineCourseId');
-
         if ($appContentId) {
             $content_obj = H5PContent::find($content);
             $apiContent = Content::find($appContentId);
@@ -301,8 +298,10 @@ class H5PContentRepository implements H5PContentRepositoryContract
                 'value' => $content_obj['uuid'],
                 'library_id' => $content_obj['library_id']
             ]);
+            Session::remove('contentId');
         }
 
+        $newsContentId = Session::get('newsContentId');
         if ($newsContentId) {
             $content_obj = H5PContent::find($content);
             $apiContent = News::find($newsContentId);
@@ -310,8 +309,10 @@ class H5PContentRepository implements H5PContentRepositoryContract
                 'value' => $content_obj['uuid'],
                 'library_id' => $content_obj['library_id']
             ]);
+            Session::remove('newsContentId');
         }
 
+        $onlineCourseId = Session::get('onlineCourseId');
         if ($onlineCourseId) {
             $content_obj = H5PContent::find($content);
             $apiContent = PracticeOnlineCourse::find($onlineCourseId);
@@ -319,6 +320,7 @@ class H5PContentRepository implements H5PContentRepositoryContract
                 'value' => $content_obj['uuid'],
                 'library_id' => $content_obj['library_id']
             ]);
+            Session::remove('onlineCourseId');
         }
     }
 }
