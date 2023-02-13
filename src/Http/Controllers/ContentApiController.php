@@ -17,6 +17,7 @@ use Alsay\LaravelH5P\Repositories\Contracts\H5PContentRepositoryContract;
 use Alsay\LaravelH5P\Services\Contracts\HeadlessH5PServiceContract;
 use Exception;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Session;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class ContentApiController extends BaseController implements ContentApiSwagger
@@ -67,7 +68,7 @@ class ContentApiController extends BaseController implements ContentApiSwagger
             return $this->sendError($error->getMessage(), 422);
         }
 
-        return $this->sendResponse(['id' => $contentId]);
+        return $this->sendResponse(['id' => $contentId, 'contentRedirectUrl' => $newsContentId = Session::get('newsContentId')]);
     }
 
     public function destroy(ContentDeleteRequest $request, int $id): JsonResponse
