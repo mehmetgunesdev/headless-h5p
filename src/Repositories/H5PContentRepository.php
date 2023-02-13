@@ -299,6 +299,7 @@ class H5PContentRepository implements H5PContentRepositoryContract
                 'library_id' => $content_obj['library_id']
             ]);
             Session::remove('contentId');
+            Session::put('contentRedirectUrl', '/content/list?create-success=true');
         }
 
         $newsContentId = Session::get('newsContentId');
@@ -310,6 +311,7 @@ class H5PContentRepository implements H5PContentRepositoryContract
                 'library_id' => $content_obj['library_id']
             ]);
             Session::remove('newsContentId');
+            Session::put('contentRedirectUrl', '/news/list?create-success=true');
         }
 
         $onlineCourseId = Session::get('onlineCourseId');
@@ -321,6 +323,7 @@ class H5PContentRepository implements H5PContentRepositoryContract
                 'library_id' => $content_obj['library_id']
             ]);
             Session::remove('onlineCourseId');
+            Session::put('contentRedirectUrl', '/onlinecourse/list?create-success=true');
         }
     }
 }
