@@ -290,13 +290,16 @@ class H5PContentRepository implements H5PContentRepositoryContract
      */
     private function contentMapping(int $content): void
     {
+        $content_obj = H5PContent::find($content);
+        $library = H5PLibrary::find($content_obj['library_id']);
+
         $appContentId = Session::get('contentId');
         if ($appContentId) {
-            $content_obj = H5PContent::find($content);
             $apiContent = Content::find($appContentId);
             $apiContent->update([
                 'value' => $content_obj['uuid'],
-                'library_id' => $content_obj['library_id']
+                'library_id' => $content_obj['library_id'],
+                'library_name' => $library['name'],
             ]);
             Session::remove('contentId');
             Session::put('contentRedirectUrl', '/content/list?create-success=true');
@@ -304,11 +307,11 @@ class H5PContentRepository implements H5PContentRepositoryContract
 
         $newsContentId = Session::get('newsContentId');
         if ($newsContentId) {
-            $content_obj = H5PContent::find($content);
             $apiContent = News::find($newsContentId);
             $apiContent->update([
                 'value' => $content_obj['uuid'],
-                'library_id' => $content_obj['library_id']
+                'library_id' => $content_obj['library_id'],
+                'library_name' => $library['name'],
             ]);
             Session::remove('newsContentId');
             Session::put('contentRedirectUrl', '/news/list?create-success=true');
@@ -316,11 +319,11 @@ class H5PContentRepository implements H5PContentRepositoryContract
 
         $onlineCourseId = Session::get('onlineCourseId');
         if ($onlineCourseId) {
-            $content_obj = H5PContent::find($content);
             $apiContent = PracticeOnlineCourse::find($onlineCourseId);
             $apiContent->update([
                 'value' => $content_obj['uuid'],
-                'library_id' => $content_obj['library_id']
+                'library_id' => $content_obj['library_id'],
+                'library_name' => $library['name'],
             ]);
             Session::remove('onlineCourseId');
             Session::put('contentRedirectUrl', '/onlinecourse/list?create-success=true');
