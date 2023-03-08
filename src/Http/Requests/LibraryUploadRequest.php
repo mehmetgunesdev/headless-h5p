@@ -21,7 +21,7 @@ class LibraryUploadRequest extends FormRequest
         return [
             'id' => ['required'],
             'contentId' => ['required'],
-            'h5p' => ['required', 'max:100000']
+            'h5p' => ['required']
         ];
     }
 

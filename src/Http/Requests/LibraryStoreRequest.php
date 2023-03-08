@@ -43,7 +43,7 @@ class LibraryStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'h5p_file' => ['required', 'max:100000']
+            'h5p_file' => ['required']
         ];
     }
 }

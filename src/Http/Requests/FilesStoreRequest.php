@@ -28,7 +28,7 @@ class FilesStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'file' => ['required', 'max:100000'],
+            'file' => ['required'],
             'field' => ['required', 'string'],
             'contentId' => ['required', 'string'],
         ];
