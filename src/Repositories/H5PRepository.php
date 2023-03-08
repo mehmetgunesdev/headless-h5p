@@ -1372,6 +1372,7 @@ class H5PRepository implements H5PFrameworkInterface
         if (config('filesystems.default') === 'cdn') {
             $content = str_replace("images\/", config('filesystems.ftp_public_path') . 'content/' . $contentId . '/images/', $content);
             $content = str_replace("audios\/", config('filesystems.ftp_public_path') . 'content/' . $contentId . '/audios/', $content);
+            $content = str_replace("videos\/", config('filesystems.ftp_public_path') . 'content/' . $contentId . '/videos/', $content);
         }
 
         return $content;
@@ -1382,6 +1383,7 @@ class H5PRepository implements H5PFrameworkInterface
         if (config('filesystems.default') === 'cdn') {
             $content = str_replace("content\/'.$contentId.'\/images\/", config('filesystems.ftp_public_path') . 'content/' . $contentId . '/images/', $content);
             $content = str_replace("content\/'.$contentId.'\/audios\/", config('filesystems.ftp_public_path') . 'content/' . $contentId . '/audios/', $content);
+            $content = str_replace("content\/'.$contentId.'\/videos\/", config('filesystems.ftp_public_path') . 'content/' . $contentId . '/videos/', $content);
         }
 
         return $content;
