@@ -106,6 +106,18 @@ class H5PContentRepository implements H5PContentRepositoryContract
         ], $id);
 
         $this->moveTmpFilesToContentFolders($nonce, $id);
+        
+        switch (true) {
+            case Session::get('contentId');
+                Session::put('contentRedirectUrl', '/content/list?update-success=true');
+                break;
+            case Session::get('newsContentId');
+                Session::put('contentRedirectUrl', '/news/list??update-success=true');
+                break;
+            case Session::get('onlineCourseId');
+                Session::put('contentRedirectUrl', '/onlinecourse/list?update-success=true');
+                break;
+        }
 
         return $id;
     }
