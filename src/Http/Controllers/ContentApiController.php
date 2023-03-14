@@ -57,7 +57,7 @@ class ContentApiController extends BaseController implements ContentApiSwagger
             return $this->sendError($error->getMessage(), 422);
         }
 
-        return $this->sendResponse(['id' => $contentId]);
+        return $this->sendResponse(['id' => $contentId, 'contentRedirectUrl' => Session::get('contentRedirectUrl')]);
     }
 
     public function store(ContentCreateRequest $request): JsonResponse
