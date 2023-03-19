@@ -17,6 +17,7 @@ use Alsay\LaravelH5P\Repositories\Contracts\H5PContentRepositoryContract;
 use Alsay\LaravelH5P\Services\Contracts\HeadlessH5PServiceContract;
 use Exception;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Session;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
@@ -104,15 +105,15 @@ class ContentApiController extends BaseController implements ContentApiSwagger
         return $this->sendResponse($settings);
     }
 
-    public function upload(LibraryStoreRequest $request): JsonResponse
+    public function upload(LibraryStoreRequest $request): RedirectResponse
     {
         try {
             $content = $this->contentRepository->upload($request->file('h5p_file'));
         } catch (Exception $error) {
-            return $this->sendError($error->getMessage(), 422);
+            return redirect()->route('h5p.editor.step_2')->with('danger', 'İçerik Yüklenirken Bir Hata Oluştu!');
         }
 
-        return $this->sendResponseForResource(ContentResource::make($content));
+        return redirect()->route('content.index')->with('success', 'İçerik Oluşturuldu');
     }
 
     public function download(AdminContentReadRequest $request, $id): BinaryFileResponse

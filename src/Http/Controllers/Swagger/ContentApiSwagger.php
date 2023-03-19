@@ -8,6 +8,7 @@ use Alsay\LaravelH5P\Http\Requests\ContentListRequest;
 use Alsay\LaravelH5P\Http\Requests\AdminContentReadRequest;
 use Alsay\LaravelH5P\Http\Requests\ContentReadRequest;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 
 use Alsay\LaravelH5P\Http\Requests\ContentUpdateRequest;
 use Alsay\LaravelH5P\Http\Requests\LibraryStoreRequest;
@@ -393,7 +394,7 @@ interface ContentApiSwagger
     *      )
     * )
     */
-    public function upload(LibraryStoreRequest $request): JsonResponse;
+    public function upload(LibraryStoreRequest $request): RedirectResponse;
 
     /**
     * @OA\Get(
