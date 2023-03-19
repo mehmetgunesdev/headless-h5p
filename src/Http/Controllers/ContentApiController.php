@@ -113,7 +113,9 @@ class ContentApiController extends BaseController implements ContentApiSwagger
             return redirect()->route('h5p.editor.step_2')->with('danger', 'İçerik Yüklenirken Bir Hata Oluştu!');
         }
 
-        return redirect()->route('content.index')->with('success', 'İçerik Oluşturuldu');
+        $contentRedirectUrl = Session::get('contentRedirectUrl');
+
+        return redirect()->to($contentRedirectUrl)->with('success', 'İçerik Oluşturuldu');
     }
 
     public function download(AdminContentReadRequest $request, $id): BinaryFileResponse
