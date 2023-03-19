@@ -227,7 +227,11 @@ class H5PContentRepository implements H5PContentRepositoryContract
 
             $safe_parameters = $this->hh5pService->getCore()->filterParameters($content);
 
-            return H5PContent::findOrFail($id);
+            $contentObj = H5PContent::findOrFail($id);
+
+            $this->contentMapping($contentObj['id']);
+
+            return $contentObj;
         } else {
             @unlink($this->hh5pService->getRepository()->getUploadedH5pPath());
             throw new H5PException(H5PException::LIBRARY_NOT_FOUND);
