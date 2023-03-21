@@ -110,8 +110,8 @@ class ContentApiController extends BaseController implements ContentApiSwagger
         try {
             $content = $this->contentRepository->upload($request->file('h5p_file'));
         } catch (Exception $error) {
-            return redirect()->route('h5p.editor.step_2')->with('danger', 'İçerik Yüklenirken Bir Hata Oluştu!');
-        }
+            logger()->error($error->getMessage());
+            return redirect()->route('h5p.editor.step_2', 'new')->with('danger', 'İçerik Yüklenirken Bir Hata Oluştu!');        }
 
         $contentRedirectUrl = Session::get('contentRedirectUrl');
 
