@@ -137,7 +137,7 @@ class H5PContentRepository implements H5PContentRepositoryContract
                     mkdir($dir_path, 0777, true);
                 }
                 rename($old_path, $new_path);
-                if (config('filesystems.default') === 'cdn') {
+                if (config('filesystems.default_upload_driver') === 'cdn') {
                     Storage::disk("cdn")->put(str_replace('/editor', '/content/' . $contentId, $file->path), file_get_contents($new_path));
                 }
             }
