@@ -991,8 +991,8 @@ class H5PRepository implements H5PFrameworkInterface
 
         $content['parameters'] = $this->changeFileUrl($content['parameters'], $content['contentId']);
         $content['params'] = $this->changeFileUrl($content['params'], $content['contentId']);
-        $content['jsonContent'] = $this->changeFileUrl($content['params'], $content['contentId']);
-        $content['filtered'] = $this->changeFileUrl($content['params'], $content['contentId']);
+//        $content['jsonContent'] = $this->changeFileUrl($content['params'], $content['contentId']);
+//        $content['filtered'] = $this->changeFileUrl($content['params'], $content['contentId']);
 
 
         $content['filtered'] = $this->changeFileFullUrl($content['filtered'], $content['contentId']);
