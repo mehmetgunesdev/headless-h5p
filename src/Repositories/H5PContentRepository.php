@@ -137,9 +137,9 @@ class H5PContentRepository implements H5PContentRepositoryContract
                     mkdir($dir_path, 0777, true);
                 }
                 rename($old_path, $new_path);
-                if (config('filesystems.default_upload_driver') === 'cdn') {
-                    Storage::disk("cdn")->put(str_replace('/editor', '/content/' . $contentId, $file->path), file_get_contents($new_path));
-                }
+//                if (config('filesystems.default_upload_driver') === 'cdn') {
+//                    Storage::disk("cdn")->put(str_replace('/editor', '/content/' . $contentId, $file->path), file_get_contents($new_path));
+//                }
             }
 
             $file->delete();
@@ -316,6 +316,7 @@ class H5PContentRepository implements H5PContentRepositoryContract
                 'value' => $content_obj['uuid'],
                 'library_id' => $content_obj['library_id'],
                 'library_name' => $library['name'],
+                'release_status' => 2
             ]);
             Session::remove('contentId');
             Session::put('contentRedirectUrl', '/content/list?create-success=true');
@@ -328,6 +329,7 @@ class H5PContentRepository implements H5PContentRepositoryContract
                 'value' => $content_obj['uuid'],
                 'library_id' => $content_obj['library_id'],
                 'library_name' => $library['name'],
+                'release_status' => 2
             ]);
             Session::remove('newsContentId');
             Session::put('contentRedirectUrl', '/news/list?create-success=true');
@@ -340,6 +342,7 @@ class H5PContentRepository implements H5PContentRepositoryContract
                 'value' => $content_obj['uuid'],
                 'library_id' => $content_obj['library_id'],
                 'library_name' => $library['name'],
+                'release_status' => 2
             ]);
             Session::remove('onlineCourseId');
             Session::put('contentRedirectUrl', '/onlinecourse/list?create-success=true');

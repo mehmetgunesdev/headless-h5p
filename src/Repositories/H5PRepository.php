@@ -988,6 +988,52 @@ class H5PRepository implements H5PFrameworkInterface
         $content['metadata'] = json_encode($content['metadata']); // : json content as string
         $content['slug'] = $content['slug'] ?? 'slug';
 
+        return $content;
+    }
+
+
+    /**
+     * Load content.
+     *
+     * @param int $id
+     *                Content identifier
+     *
+     * @return array
+     *               Associative array containing:
+     *               - contentId: Identifier for the content
+     *               - params: json content as string
+     *               - embedType: csv of embed types
+     *               - title: The contents title
+     *               - language: Language code for the content
+     *               - libraryId: Id for the main library
+     *               - libraryName: The library machine name
+     *               - libraryMajorVersion: The library's majorVersion
+     *               - libraryMinorVersion: The library's minorVersion
+     *               - libraryEmbedTypes: CSV of the main library's embed types
+     *               - libraryFullscreen: 1 if fullscreen is supported. 0 otherwise.
+     */
+    public function loadContentFromApi($id)
+    {
+        $content = H5PContent::with('library')->where(['id' => $id])->firstOrFail();
+        if (is_null($content->library)) {
+            throw new H5PException(H5PException::LIBRARY_NOT_FOUND);
+        }
+        $content = $content->toArray();
+        $content['contentId'] = $content['id']; // : Identifier for the content
+        $content['params'] = json_encode($content['params']); // : json content as string
+        $content['embedType'] = \H5PCore::determineEmbedType($content['embed_type'] ?? 'div', $content['library']['embed_types']); // : csv of embed types
+        //$content ['title'] // : The contents title
+        //$content ['language'] // : Language code for the content
+        $content['libraryId'] = $content['library_id']; // : Id for the main library
+        $content['libraryName'] = $content['library']['machineName']; // The library machine name
+        $content['libraryMajorVersion'] = $content['library']['majorVersion']; // : The library's majorVersion
+        $content['libraryMinorVersion'] = $content['library']['minorVersion']; // : The library's minorVersion
+        $content['libraryEmbedTypes'] = $content['library']['embed_types']; // : CSV of the main library's embed types
+        $content['libraryFullscreen'] = 0; // : 1 if fullscreen is supported. 0 otherwise.
+        //$content ['metadata'] = $content ['metadata'] ?? "";
+        $content['metadata'] = json_encode($content['metadata']); // : json content as string
+        $content['slug'] = $content['slug'] ?? 'slug';
+
 
         $content['parameters'] = $this->changeFileUrl($content['parameters'], $content['contentId']);
         $content['params'] = $this->changeFileUrl($content['params'], $content['contentId']);

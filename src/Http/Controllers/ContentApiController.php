@@ -105,6 +105,17 @@ class ContentApiController extends BaseController implements ContentApiSwagger
         return $this->sendResponse($settings);
     }
 
+    public function showConfig(ContentReadRequest $request, string $uuid): JsonResponse
+    {
+        try {
+            $settings = $this->hh5pService->getContentApiSettings($request->getH5PContent()->id);
+        } catch (Exception $error) {
+            return $this->sendError($error->getMessage(), 422);
+        }
+
+        return $this->sendResponse($settings);
+    }
+
     public function upload(LibraryStoreRequest $request): RedirectResponse
     {
         try {

@@ -494,6 +494,140 @@ class HeadlessH5PService implements HeadlessH5PServiceContract
 
         return $settings;
     }
+    public function getContentApiSettings($id): array
+    {
+        $lang = config('hh5p.language');
+
+        // READ this https://h5p.org/creating-your-own-h5p-plugin
+        $user = Auth::user();
+
+        $token = str_replace('Bearer ', '', request()->header('authorization'));
+
+
+        $config = $this->getConfig();
+
+        $settings = [
+            'baseUrl' => $config['domain'],
+            'url' => $config['url'],
+            'postUserStatistics' => config('hh5p.h5p_track_user'),
+            'ajax' => [
+                'setFinished' => route('h5p.ajax.finish').'?token='.$token,
+                'contentUserData' => route('h5p.ajax.content-user-data').'?token='.$token,
+                // 'contentUserData' => route('h5p.ajax.content-user-data', ['content_id' => ':contentId', 'data_type' => ':dataType', 'sub_content_id' => ':subContentId']),
+            ],
+            'saveFreq' => false,
+            'siteUrl' => $config['domain'],
+            'l10n' => [
+                'H5P' => __('h5p::h5p'),
+            ],
+            'hubIsEnabled' => config('hh5p.h5p_hub_is_enabled'),
+            'crossorigin' => 'anonymous',
+
+        ];
+
+        if ($user) {
+            $settings['user'] = [
+                "name" => $user->name,
+                "mail" => $user->email,
+            ];
+        }
+
+        $settings['loadedJs'] = [];
+        $settings['loadedCss'] = [];
+
+        $settings['core'] = [
+            'styles' => [],
+            'scripts' => [],
+        ];
+        foreach (H5PCore::$styles as $style) {
+            $settings['core']['styles'][] = $config['get_h5pcore_url'] . '/' . $style;
+        }
+        foreach (H5PCore::$scripts as $script) {
+            $settings['core']['scripts'][] = $config['get_h5pcore_url'] . '/' . $script;
+        }
+        //$settings['core']['scripts'][] = $config['get_h5peditor_url'].'/language/' . $lang . '.js';
+
+        $h5pEditorDir = file_exists(__DIR__ . '/../../vendor/h5p/h5p-editor')
+            ? __DIR__ . '/../../vendor/h5p/h5p-editor'
+            : __DIR__ . '/../../../../../vendor/h5p/h5p-editor';
+        $h5pCoreDir = file_exists(__DIR__ . '/../../vendor/h5p/h5p-core')
+            ? __DIR__ . '/../../vendor/h5p/h5p-core'
+            : __DIR__ . '/../../../../../vendor/h5p/h5p-core';
+
+        $settings['core']['scripts'] = $this->margeFileList(
+            $settings['core']['scripts'],
+            'js',
+            [$config['get_h5peditor_url'], $config['get_h5pcore_url']],
+            [$h5pEditorDir, $h5pCoreDir]
+        );
+        /*$settings['core']['styles'] = $this->margeFileList(
+            $settings['core']['styles'],
+            'css',
+            [$config['get_h5peditor_url'], $config['get_h5pcore_url']],
+            [$h5pEditorDir, $h5pCoreDir]
+        );*/
+
+        // get settings start
+
+        $content = $this->getCore()->loadContentFromApi($id);
+        $content['metadata']['title'] = $content['title'];
+
+        $safe_parameters = $this->getCore()->filterParameters($content); // TODO: actually this is inserting stuff in Database, it shouldn'e instert anything since this is a GET
+
+        $library = $content['library'];
+
+        $uberName = $library['name'] . ' ' . $library['majorVersion'] . '.' . $library['minorVersion'];
+
+        $settings['contents']["cid-$id"] = [
+            'library' => $uberName,
+            'content' => $content,
+            'jsonContent' => $safe_parameters,
+            'fullScreen' => $content['library']['fullscreen'],
+            // TODO check all of those endpointis are working fine
+            'exportUrl' => config('hh5p.h5p_export') ? route('hh5p.content.export', [$content['id']]) : '',
+            //'embedCode'       => '<iframe src="'.route('h5p.embed', ['id' => $content['id']]).'" width=":w" height=":h" frameborder="0" allowfullscreen="allowfullscreen"></iframe>',
+            //'resizeCode'      => '<script src="'.self::get_h5pcore_url('/js/h5p-resizer.js').'" charset="UTF-8"></script>',
+            //'url'             => route('h5p.embed', ['id' => $content['id']]),
+            'title' => $content['title'],
+            'displayOptions' => $this->getCore()->getDisplayOptionsForView(0, $content['id']),
+            'contentUserData' => [
+                0 => [
+                    'state' => '{}', // TODO this should be retrived
+                ],
+            ],
+            'nonce' => $content['nonce'],
+        ];
+
+        // get settings stop
+
+        $settings['nonce'] = $settings['contents']["cid-$id"]['nonce'];
+
+        $language_script = '/language/' . $lang . '.js';
+
+        $preloaded_dependencies = $this->getCore()->loadContentDependencies($id, 'preloaded');
+        $files = $this->getCore()->getDependenciesFiles($preloaded_dependencies);
+
+        $cid = $settings['contents']["cid-$id"];
+        $embed = H5PCore::determineEmbedType($cid['content']['embed_type'] ?? 'div', $cid['content']['library']['embedTypes']);
+
+        $scripts = array_map(function ($value) use ($config) {
+            return $config['url'] . ($value->path . $value->version);
+        }, $files['scripts']);
+
+        $styles = array_map(function ($value) use ($config) {
+            return $config['url'] . ($value->path . $value->version);
+        }, $files['styles']);
+
+        if ($embed === 'iframe') {
+            $settings['contents']["cid-$id"]['scripts'] = $scripts;
+            $settings['contents']["cid-$id"]['styles'] = $styles;
+        } else {
+            $settings['loadedCss'] = $styles;
+            $settings['loadedJs'] = $scripts;
+        }
+
+        return $settings;
+    }
 
     public function deleteLibrary($id): bool
     {
