@@ -569,7 +569,7 @@ class HeadlessH5PService implements HeadlessH5PServiceContract
 
         // get settings start
 
-        $content = $this->getCore()->loadContentFromApi($id);
+        $content = $this->getCore()->loadContent($id);
         $content['metadata']['title'] = $content['title'];
 
         $safe_parameters = $this->getCore()->filterParameters($content); // TODO: actually this is inserting stuff in Database, it shouldn'e instert anything since this is a GET
