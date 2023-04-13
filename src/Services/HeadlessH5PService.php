@@ -578,6 +578,14 @@ class HeadlessH5PService implements HeadlessH5PServiceContract
 
         $uberName = $library['name'] . ' ' . $library['majorVersion'] . '.' . $library['minorVersion'];
 
+        $content['parameters'] = $this->changeFileUrl($content['parameters'], $content['contentId']);
+        $content['params'] = $this->changeFileUrl($content['params'], $content['contentId']);
+//        $content['jsonContent'] = $this->changeFileUrl($content['params'], $content['contentId']);
+//        $content['filtered'] = $this->changeFileUrl($content['params'], $content['contentId']);
+
+        $content['filtered'] = $this->changeFileFullUrl($content['filtered'], $content['contentId']);
+//        $content['metadata'] = $this->changeFileFullUrl($content['metadata'], $content['contentId']);
+
         $settings['contents']["cid-$id"] = [
             'library' => $uberName,
             'content' => $content,
@@ -898,5 +906,31 @@ class HeadlessH5PService implements HeadlessH5PServiceContract
         }
 
         return $this->editorAjaxRepository->getTranslations($libs, $language);
+    }
+
+    private function changeFileUrl(?string $content, int $contentId): ?string
+    {
+        if (config('filesystems.default_upload_driver') === 'cdn') {
+//            $content = str_replace("images\\/", config('filesystems.ftp_public_path') . 'content/' . $contentId . '/images/', $content);
+            $content = str_replace("audios\\/", config('filesystems.ftp_public_path') . 'content/' . $contentId . '/audios/', $content);
+            $content = str_replace("videos\\/", config('filesystems.ftp_public_path') . 'content/' . $contentId . '/videos/', $content);
+
+            $content = str_replace("images\/", config('filesystems.ftp_public_path') . 'content/' . $contentId . '/images/', $content);
+            $content = str_replace("audios\/", config('filesystems.ftp_public_path') . 'content/' . $contentId . '/audios/', $content);
+            $content = str_replace("videos\/", config('filesystems.ftp_public_path') . 'content/' . $contentId . '/videos/', $content);
+        }
+
+        return $content;
+    }
+
+    private function changeFileFullUrl(?string $content, int $contentId): ?string
+    {
+        if (config('filesystems.default_upload_driver') === 'cdn') {
+            $content = str_replace("content\/'.$contentId.'\/images\/", config('filesystems.ftp_public_path') . 'content/' . $contentId . '/images/', $content);
+            $content = str_replace("content\/'.$contentId.'\/audios\/", config('filesystems.ftp_public_path') . 'content/' . $contentId . '/audios/', $content);
+            $content = str_replace("content\/'.$contentId.'\/videos\/", config('filesystems.ftp_public_path') . 'content/' . $contentId . '/videos/', $content);
+        }
+
+        return $content;
     }
 }
