@@ -580,10 +580,10 @@ class HeadlessH5PService implements HeadlessH5PServiceContract
 
         $content['parameters'] = $this->changeFileUrl($content['parameters'], $content['contentId']);
         $content['params'] = $this->changeFileUrl($content['params'], $content['contentId']);
-//        $content['jsonContent'] = $this->changeFileUrl($content['params'], $content['contentId']);
-//        $content['filtered'] = $this->changeFileUrl($content['params'], $content['contentId']);
+        $content['jsonContent'] = $this->changeFileUrl($content['params'], $content['contentId']);
+        $content['filtered'] = $this->changeFileUrl($content['params'], $content['contentId']);
 
-        $content['filtered'] = $this->changeFileFullUrl($content['filtered'], $content['contentId']);
+//        $content['filtered'] = $this->changeFileFullUrl($content['filtered'], $content['contentId']);
 //        $content['metadata'] = $this->changeFileFullUrl($content['metadata'], $content['contentId']);
 
         $settings['contents']["cid-$id"] = [
@@ -914,6 +914,7 @@ class HeadlessH5PService implements HeadlessH5PServiceContract
 //            $content = str_replace("images\\/", config('filesystems.ftp_public_path') . 'content/' . $contentId . '/images/', $content);
             $content = str_replace("audios\\/", config('filesystems.ftp_public_path') . 'content/' . $contentId . '/audios/', $content);
             $content = str_replace("videos\\/", config('filesystems.ftp_public_path') . 'content/' . $contentId . '/videos/', $content);
+            $content = str_replace("images\\/", config('filesystems.ftp_public_path') . 'content/' . $contentId . '/images/', $content);
 
             $content = str_replace("images\/", config('filesystems.ftp_public_path') . 'content/' . $contentId . '/images/', $content);
             $content = str_replace("audios\/", config('filesystems.ftp_public_path') . 'content/' . $contentId . '/audios/', $content);
