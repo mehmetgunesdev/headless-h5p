@@ -47,13 +47,13 @@ class H5PRepository implements H5PFrameworkInterface
     /**
      * Fetches a file from a remote server using HTTP GET.
      *
-     * @param string $url      where you want to get or send data
-     * @param array  $data     data to post to the URL
-     * @param bool   $blocking set to 'FALSE' to instantly time out (fire and forget)
-     * @param string $stream   path to where the file should be saved
-     * @param bool   $fullData Return additional response data such as headers and potentially other data
-     * @param array  $headers  Headers to send
-     * @param array  $files    Files to send
+     * @param string $url where you want to get or send data
+     * @param array $data data to post to the URL
+     * @param bool $blocking set to 'FALSE' to instantly time out (fire and forget)
+     * @param string $stream path to where the file should be saved
+     * @param bool $fullData Return additional response data such as headers and potentially other data
+     * @param array $headers Headers to send
+     * @param array $files Files to send
      * @param string $method
      *
      * @return string|array The content (response body), or an array with data. NULL if something went wrong
@@ -62,7 +62,7 @@ class H5PRepository implements H5PFrameworkInterface
     {
         @set_time_limit(0);
         $options = [
-            'timeout'  => !empty($blocking) ? 30 : 0.01,
+            'timeout' => !empty($blocking) ? 30 : 0.01,
         ];
 
         if (!empty($stream)) {
@@ -109,7 +109,7 @@ class H5PRepository implements H5PFrameworkInterface
      * Show the user an error message.
      *
      * @param string $message The error message
-     * @param string $code    An optional code
+     * @param string $code An optional code
      */
     public function setErrorMessage($message, $code = null)
     {
@@ -144,7 +144,7 @@ class H5PRepository implements H5PFrameworkInterface
      *
      * @param string $message
      *                             The english string to be translated
-     * @param array  $replacements
+     * @param array $replacements
      *                             An associative array of replacements to make after translation. Incidences
      *                             of any key in this array are replaced with the corresponding value. Based
      *                             on the first character of the key, the value is escaped and/or themed:
@@ -185,7 +185,7 @@ class H5PRepository implements H5PFrameworkInterface
     {
 //        $path = 'h5p/libraries/' . $libraryFolderName . '/' . $fileName;
 //        return Storage::disk('local')->exists($path) ? Storage::disk('local')->url($path) : null;
-        return config('app.url').'/storage/h5p/libraries/' . $libraryFolderName . '/' . $fileName;
+        return config('app.url') . '/storage/h5p/libraries/' . $libraryFolderName . '/' . $fileName;
     }
 
     /**
@@ -236,7 +236,7 @@ class H5PRepository implements H5PFrameworkInterface
                 ->on('l1.name', '=', 'l2.name')
                 ->on(fn($query) => $query
                     ->on('l1.major_version', '<', 'l2.major_version')
-                    ->orOn(fn ($query) => $query
+                    ->orOn(fn($query) => $query
                         ->orOn('l1.major_version', '=', 'l2.major_version')
                         ->on('l1.minor_version', '<', 'l2.minor_version')
                     )
@@ -307,9 +307,9 @@ class H5PRepository implements H5PFrameworkInterface
      *
      * @param string $machineName
      *                             The librarys machine name
-     * @param int    $majorVersion
+     * @param int $majorVersion
      *                             Optional major version number for library
-     * @param int    $minorVersion
+     * @param int $minorVersion
      *                             Optional minor version number for library
      *
      * @return int
@@ -339,7 +339,7 @@ class H5PRepository implements H5PFrameworkInterface
      *
      * The default extension list is part of h5p, but admins should be allowed to modify it
      *
-     * @param bool   $isLibrary
+     * @param bool $isLibrary
      *                                        TRUE if this is the whitelist for a library. FALSE if it is the whitelist
      *                                        for the content folder we are getting
      * @param string $defaultContentWhitelist
@@ -403,7 +403,7 @@ class H5PRepository implements H5PFrameworkInterface
     /**
      * Convert list of file paths to csv.
      *
-     * @param array  $library
+     * @param array $library
      *                        Library data as found in library.json files
      * @param string $key
      *                        Key that should be found in $libraryData
@@ -453,7 +453,7 @@ class H5PRepository implements H5PFrameworkInterface
      *                            - semantics(optional): Json describing the content structure for the library
      *                            - language(optional): associative array containing:
      *                            - languageCode: Translation in json format
-     * @param bool   $new
+     * @param bool $new
      *
      * @return
      */
@@ -511,7 +511,7 @@ class H5PRepository implements H5PFrameworkInterface
      *                             - params: The content in json format
      *                             - library: An associative array containing:
      *                             - libraryId: The id of the main library for this content
-     * @param int   $contentMainId
+     * @param int $contentMainId
      *                             Main id for the content if this is a system that supports versions
      */
     public function insertContent($content, $contentMainId = null)
@@ -603,7 +603,7 @@ class H5PRepository implements H5PFrameworkInterface
      *                             - params: The content in json format
      *                             - library: An associative array containing:
      *                             - libraryId: The id of the main library for this content
-     * @param int   $contentMainId
+     * @param int $contentMainId
      *                             Main id for the content if this is a system that supports versions
      */
     public function updateContent($content, $contentMainId = null)
@@ -634,9 +634,9 @@ class H5PRepository implements H5PFrameworkInterface
     /**
      * Save what libraries a library is depending on.
      *
-     * @param int    $libraryId
+     * @param int $libraryId
      *                                Library Id for the library we're saving dependencies for
-     * @param array  $dependencies
+     * @param array $dependencies
      *                                List of dependencies as associative arrays containing:
      *                                - machineName: The library machineName
      *                                - majorVersion: The library's majorVersion
@@ -707,7 +707,7 @@ class H5PRepository implements H5PFrameworkInterface
     /**
      * Saves what libraries the content uses.
      *
-     * @param int   $contentId
+     * @param int $contentId
      *                              Id identifying the content
      * @param array $librariesInUse
      *                              List of libraries the content uses. Libraries consist of associative arrays with:
@@ -761,7 +761,7 @@ class H5PRepository implements H5PFrameworkInterface
      * Get number of content/nodes using a library, and the number of
      * dependencies to other libraries.
      *
-     * @param int  $libraryId
+     * @param int $libraryId
      *                          Library identifier
      * @param bool $skipContent
      *                          Flag to indicate if content usage should be skipped
@@ -774,20 +774,20 @@ class H5PRepository implements H5PFrameworkInterface
     public function getLibraryUsage($libraryId, $skipContent = false)
     {
         $contentsCount = $skipContent ? -1 : H5PLibrary::query()
-                                                       ->join('hh5p_contents_libraries', 'hh5p_libraries.id', '=', 'hh5p_contents_libraries.library_id')
-                                                       ->join('hh5p_contents', 'hh5p_contents_libraries.content_id', '=', 'hh5p_contents.id')
-                                                       ->where('hh5p_libraries.id', '=', $libraryId)
-                                                       ->distinct()
-                                                       ->count('hh5p_contents.id');
+            ->join('hh5p_contents_libraries', 'hh5p_libraries.id', '=', 'hh5p_contents_libraries.library_id')
+            ->join('hh5p_contents', 'hh5p_contents_libraries.content_id', '=', 'hh5p_contents.id')
+            ->where('hh5p_libraries.id', '=', $libraryId)
+            ->distinct()
+            ->count('hh5p_contents.id');
 
         $librariesCount = H5PLibrary::query()
-                                    ->with('dependencies')
-                                    ->whereHas('dependencies', fn($query) => $query->whereRequiredLibraryId($libraryId))
-                                    ->count();
+            ->with('dependencies')
+            ->whereHas('dependencies', fn($query) => $query->whereRequiredLibraryId($libraryId))
+            ->count();
 
         return [
-          'content' => $contentsCount,
-          'libraries' => $librariesCount,
+            'content' => $contentsCount,
+            'libraries' => $librariesCount,
         ];
     }
 
@@ -796,9 +796,9 @@ class H5PRepository implements H5PFrameworkInterface
      *
      * @param string $machineName
      *                             The library's machine name
-     * @param int    $majorVersion
+     * @param int $majorVersion
      *                             The library's major version
-     * @param int    $minorVersion
+     * @param int $minorVersion
      *                             The library's minor version
      *
      * @return array|false
@@ -865,9 +865,9 @@ class H5PRepository implements H5PFrameworkInterface
      *
      * @param string $machineName
      *                             Machine name for the library
-     * @param int    $majorVersion
+     * @param int $majorVersion
      *                             The library's major version
-     * @param int    $minorVersion
+     * @param int $minorVersion
      *                             The library's minor version
      *
      * @return string
@@ -886,13 +886,13 @@ class H5PRepository implements H5PFrameworkInterface
     /**
      * Makes it possible to alter the semantics, adding custom fields, etc.
      *
-     * @param array  $semantics
+     * @param array $semantics
      *                             Associative array representing the semantics
      * @param string $machineName
      *                             The library's machine name
-     * @param int    $majorVersion
+     * @param int $majorVersion
      *                             The library's major version
-     * @param int    $minorVersion
+     * @param int $minorVersion
      *                             The library's minor version
      */
     public function alterLibrarySemantics(&$semantics, $machineName, $majorVersion, $minorVersion)
@@ -991,63 +991,6 @@ class H5PRepository implements H5PFrameworkInterface
         return $content;
     }
 
-
-    /**
-     * Load content.
-     *
-     * @param int $id
-     *                Content identifier
-     *
-     * @return array
-     *               Associative array containing:
-     *               - contentId: Identifier for the content
-     *               - params: json content as string
-     *               - embedType: csv of embed types
-     *               - title: The contents title
-     *               - language: Language code for the content
-     *               - libraryId: Id for the main library
-     *               - libraryName: The library machine name
-     *               - libraryMajorVersion: The library's majorVersion
-     *               - libraryMinorVersion: The library's minorVersion
-     *               - libraryEmbedTypes: CSV of the main library's embed types
-     *               - libraryFullscreen: 1 if fullscreen is supported. 0 otherwise.
-     */
-    public function loadContentFromApi($id)
-    {
-        $content = H5PContent::with('library')->where(['id' => $id])->firstOrFail();
-        if (is_null($content->library)) {
-            throw new H5PException(H5PException::LIBRARY_NOT_FOUND);
-        }
-        $content = $content->toArray();
-        $content['contentId'] = $content['id']; // : Identifier for the content
-        $content['params'] = json_encode($content['params']); // : json content as string
-        $content['embedType'] = \H5PCore::determineEmbedType($content['embed_type'] ?? 'div', $content['library']['embed_types']); // : csv of embed types
-        //$content ['title'] // : The contents title
-        //$content ['language'] // : Language code for the content
-        $content['libraryId'] = $content['library_id']; // : Id for the main library
-        $content['libraryName'] = $content['library']['machineName']; // The library machine name
-        $content['libraryMajorVersion'] = $content['library']['majorVersion']; // : The library's majorVersion
-        $content['libraryMinorVersion'] = $content['library']['minorVersion']; // : The library's minorVersion
-        $content['libraryEmbedTypes'] = $content['library']['embed_types']; // : CSV of the main library's embed types
-        $content['libraryFullscreen'] = 0; // : 1 if fullscreen is supported. 0 otherwise.
-        //$content ['metadata'] = $content ['metadata'] ?? "";
-        $content['metadata'] = json_encode($content['metadata']); // : json content as string
-        $content['slug'] = $content['slug'] ?? 'slug';
-
-
-        $content['parameters'] = $this->changeFileUrl($content['parameters'], $content['contentId']);
-        $content['params'] = $this->changeFileUrl($content['params'], $content['contentId']);
-//        $content['jsonContent'] = $this->changeFileUrl($content['params'], $content['contentId']);
-//        $content['filtered'] = $this->changeFileUrl($content['params'], $content['contentId']);
-
-
-        $content['filtered'] = $this->changeFileFullUrl($content['filtered'], $content['contentId']);
-        $content['metadata'] = $this->changeFileFullUrl($content['metadata'], $content['contentId']);
-
-
-        return $content;
-    }
-
     /**
      * Load dependencies for the given content of the given type.
      *
@@ -1117,14 +1060,13 @@ class H5PRepository implements H5PFrameworkInterface
     }
 
 
-
     /**
      * Stores the given setting.
      * For example when did we last check h5p.org for updates to our libraries.
      *
      * @param string $name
      *                      Identifier for the setting
-     * @param mixed  $value Data
+     * @param mixed $value Data
      *                      Whatever we want to store as the setting
      */
     public function setOption($name, $value)
@@ -1144,7 +1086,7 @@ class H5PRepository implements H5PFrameworkInterface
     /**
      * This will update selected fields on the given content.
      *
-     * @param int   $id     Content identifier
+     * @param int $id Content identifier
      * @param array $fields Content fields, e.g. filtered or slug.
      */
     public function updateContentFields($id, $fields)
@@ -1161,7 +1103,7 @@ class H5PRepository implements H5PFrameworkInterface
      */
     public function clearFilteredParameters($library_ids)
     {
-         H5PContent::query()->whereIn('library_id', $library_ids)->update(['filtered' => null]);
+        H5PContent::query()->whereIn('library_id', $library_ids)->update(['filtered' => null]);
     }
 
     /**
@@ -1177,7 +1119,7 @@ class H5PRepository implements H5PFrameworkInterface
     /**
      * Get number of contents using library as main library.
      *
-     * @param int   $libraryId
+     * @param int $libraryId
      * @param array $skip
      *
      * @return int
@@ -1195,7 +1137,7 @@ class H5PRepository implements H5PFrameworkInterface
      */
     public function isContentSlugAvailable($slug)
     {
-        return (bool) H5PContent::where(['slug' => $slug])->first();
+        return (bool)H5PContent::where(['slug' => $slug])->first();
     }
 
     /**
@@ -1227,7 +1169,7 @@ class H5PRepository implements H5PFrameworkInterface
      *
      * @param string $key
      *                          Hash key for the given libraries
-     * @param array  $libraries
+     * @param array $libraries
      *                          List of dependencies(libraries) used to create the key
      */
     public function saveCachedAssets($key, $libraries)
@@ -1256,13 +1198,13 @@ class H5PRepository implements H5PFrameworkInterface
     public function getLibraryContentCount()
     {
         return H5PLibrary::query()
-                         ->select('name', 'major_version', 'minor_version')
-                         ->with('contents')
-                         ->has('contents')
-                         ->withCount('contents as count')
-                         ->get()
-                         ->mapWithKeys(fn($item, $key) => [$item->uberName => $item->count])
-                         ->toArray();
+            ->select('name', 'major_version', 'minor_version')
+            ->with('contents')
+            ->has('contents')
+            ->withCount('contents as count')
+            ->get()
+            ->mapWithKeys(fn($item, $key) => [$item->uberName => $item->count])
+            ->toArray();
     }
 
     /**
@@ -1327,7 +1269,7 @@ class H5PRepository implements H5PFrameworkInterface
     public function replaceContentTypeCache($contentTypeCache)
     {
         foreach ($contentTypeCache->contentTypes as $ct) {
-           $data[] = [
+            $data[] = [
                 'machine_name' => $ct->id,
                 'major_version' => $ct->version->major,
                 'minor_version' => $ct->version->minor,
@@ -1352,7 +1294,7 @@ class H5PRepository implements H5PFrameworkInterface
             ];
         }
 
-        DB::transaction(function () use($data) {
+        DB::transaction(function () use ($data) {
             H5pLibrariesHubCache::query()->delete();
             H5pLibrariesHubCache::insert($data);
         });
@@ -1373,7 +1315,7 @@ class H5PRepository implements H5PFrameworkInterface
      * Replace content hub metadata cache.
      *
      * @param JsonSerializable $metadata Metadata as received from content hub
-     * @param string           $lang     Language in ISO 639-1
+     * @param string $lang Language in ISO 639-1
      *
      * @return mixed
      */
@@ -1407,7 +1349,7 @@ class H5PRepository implements H5PFrameworkInterface
      * Set time of last content hub metadata check.
      *
      * @param int|null $time Time in RFC7231 format
-     * @param string   $lang Language code iin ISO 639-1 format
+     * @param string $lang Language code iin ISO 639-1 format
      *
      * @return bool True if successful
      */
@@ -1415,29 +1357,4 @@ class H5PRepository implements H5PFrameworkInterface
     {
     }
 
-    public function changeFileUrl(?string $content, int $contentId): ?string
-    {
-        if (config('filesystems.default_upload_driver') === 'cdn') {
-//            $content = str_replace("images\\/", config('filesystems.ftp_public_path') . 'content/' . $contentId . '/images/', $content);
-            $content = str_replace("audios\\/", config('filesystems.ftp_public_path') . 'content/' . $contentId . '/audios/', $content);
-            $content = str_replace("videos\\/", config('filesystems.ftp_public_path') . 'content/' . $contentId . '/videos/', $content);
-
-            $content = str_replace("images\/", config('filesystems.ftp_public_path') . 'content/' . $contentId . '/images/', $content);
-            $content = str_replace("audios\/", config('filesystems.ftp_public_path') . 'content/' . $contentId . '/audios/', $content);
-            $content = str_replace("videos\/", config('filesystems.ftp_public_path') . 'content/' . $contentId . '/videos/', $content);
-        }
-
-        return $content;
-    }
-
-    public function changeFileFullUrl(?string $content, int $contentId): ?string
-    {
-        if (config('filesystems.default_upload_driver') === 'cdn') {
-            $content = str_replace("content\/'.$contentId.'\/images\/", config('filesystems.ftp_public_path') . 'content/' . $contentId . '/images/', $content);
-            $content = str_replace("content\/'.$contentId.'\/audios\/", config('filesystems.ftp_public_path') . 'content/' . $contentId . '/audios/', $content);
-            $content = str_replace("content\/'.$contentId.'\/videos\/", config('filesystems.ftp_public_path') . 'content/' . $contentId . '/videos/', $content);
-        }
-
-        return $content;
-    }
 }
