@@ -46,6 +46,7 @@ interface HeadlessH5PServiceContract
     public function getEditorSettings($content = null): array;
 
     public function getContentSettings($id): array;
+
     public function getContentApiSettings($id): array;
 
     public function deleteLibrary($id): bool;
