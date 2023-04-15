@@ -917,6 +917,7 @@ class HeadlessH5PService implements HeadlessH5PServiceContract
     private function changeFileUrl(?string $content, int $contentId): ?string
     {
         if (config('filesystems.default_upload_driver') === 'cdn') {
+            $content = str_replace('#tmp' , '', $content);
 //            $content = str_replace("images\\/", config('filesystems.ftp_public_path') . 'content/' . $contentId . '/images/', $content);
             $content = str_replace("audios\\/", config('filesystems.ftp_public_path') . 'content/' . $contentId . '/audios/', $content);
             $content = str_replace("videos\\/", config('filesystems.ftp_public_path') . 'content/' . $contentId . '/videos/', $content);
@@ -933,6 +934,7 @@ class HeadlessH5PService implements HeadlessH5PServiceContract
     private function changeFileFullUrl(?string $content, int $contentId): ?string
     {
         if (config('filesystems.default_upload_driver') === 'cdn') {
+            $content = str_replace('#tmp' , '', $content);
             $content = str_replace("content\/'.$contentId.'\/images\/", config('filesystems.ftp_public_path') . 'content/' . $contentId . '/images/', $content);
             $content = str_replace("content\/'.$contentId.'\/audios\/", config('filesystems.ftp_public_path') . 'content/' . $contentId . '/audios/', $content);
             $content = str_replace("content\/'.$contentId.'\/videos\/", config('filesystems.ftp_public_path') . 'content/' . $contentId . '/videos/', $content);
