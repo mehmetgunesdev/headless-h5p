@@ -913,7 +913,9 @@ class HeadlessH5PService implements HeadlessH5PServiceContract
 
     private function changeFileUrl(?string $content, int $contentId): ?string
     {
-        if (config('filesystems.default_upload_driver') === 'cdn') {
+        if (config('filesystems.default_upload_driver') === 'cdn' &&
+            !strpos($content, "diyalekt-cdn.eba.gov.tr")
+        ) {
             $content = str_replace('#tmp' , '', $content);
 //            $content = str_replace("images\\/", config('filesystems.ftp_public_path') . 'content/' . $contentId . '/images/', $content);
             $content = str_replace("audios\\/", config('filesystems.ftp_public_path') . 'content/' . $contentId . '/audios/', $content);
