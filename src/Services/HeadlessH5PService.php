@@ -580,14 +580,11 @@ class HeadlessH5PService implements HeadlessH5PServiceContract
 
         $content['parameters'] = $this->changeFileUrl($content['parameters'], $content['contentId']);
         $content['params'] = $this->changeFileUrl($content['params'], $content['contentId']);
-
-        if (!empty($content['jsonContent']) && is_string($content['jsonContent'])) {
-            $content['jsonContent'] = $this->changeFileUrl($content['jsonContent'], $content['contentId']);
-        }
-
         if (!empty($content['filtered']) && is_string($content['filtered'])) {
             $content['filtered'] = $this->changeFileUrl($content['filtered'], $content['contentId']);
         }
+
+        $safe_parameters = $this->changeFileUrl($safe_parameters, $content['contentId']);
 
 //        $content['filtered'] = $this->changeFileFullUrl($content['filtered'], $content['contentId']);
 //        $content['metadata'] = $this->changeFileFullUrl($content['metadata'], $content['contentId']);
