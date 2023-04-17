@@ -316,7 +316,8 @@ class H5PContentRepository implements H5PContentRepositoryContract
                 'value' => $content_obj['uuid'],
                 'library_id' => $content_obj['library_id'],
                 'library_name' => $library['name'],
-                'release_status' => 2
+                'release_status' => 2,
+                'rel_instance_type' => 1
             ]);
             Session::remove('contentId');
             Session::put('contentRedirectUrl', '/content/list?create-success=true');
@@ -329,7 +330,8 @@ class H5PContentRepository implements H5PContentRepositoryContract
                 'value' => $content_obj['uuid'],
                 'library_id' => $content_obj['library_id'],
                 'library_name' => $library['name'],
-                'release_status' => 2
+                'release_status' => 2,
+                'rel_instance_type' => 2
             ]);
             Session::remove('newsContentId');
             Session::put('contentRedirectUrl', '/news/list?create-success=true');
@@ -342,7 +344,8 @@ class H5PContentRepository implements H5PContentRepositoryContract
                 'value' => $content_obj['uuid'],
                 'library_id' => $content_obj['library_id'],
                 'library_name' => $library['name'],
-                'release_status' => 2
+                'release_status' => 2,
+                'rel_instance_type' => 3
             ]);
             Session::remove('onlineCourseId');
             Session::put('contentRedirectUrl', '/onlinecourse/list?create-success=true');
