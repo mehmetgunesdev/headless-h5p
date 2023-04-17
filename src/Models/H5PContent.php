@@ -118,7 +118,8 @@ class H5PContent extends Model
         'filtered',
         'disable',
         'embed_type',
-        'nonce'
+        'nonce',
+        'rel_instance_type'
     ];
 
     public function getParamsAttribute()
